@@ -42,35 +42,38 @@
             }
 
             @keyframes slideFromRight {
-        from {
-            transform: translateX(100%);
-        }
-        to {
-            transform: translateX(0);
-        }
-    }
+                from {
+                    transform: translateX(100%);
+                }
 
-    @keyframes slideFromLeft {
-        from {
-            transform: translateX(-100%);
-        }
-        to {
-            transform: translateX(0);
-        }
-    }
+                to {
+                    transform: translateX(0);
+                }
+            }
 
-    .slide-from-right {
-        animation: slideFromRight 1s forwards;
-    }
+            @keyframes slideFromLeft {
+                from {
+                    transform: translateX(-100%);
+                }
 
-    .slide-from-left {
-        animation: slideFromLeft 1s forwards;
-    }
+                to {
+                    transform: translateX(0);
+                }
+            }
 
-    /* Ensuring smoother animation */
-    .no-animation {
-        animation: none !important;
-    }        </style>
+            .slide-from-right {
+                animation: slideFromRight 1s forwards;
+            }
+
+            .slide-from-left {
+                animation: slideFromLeft 1s forwards;
+            }
+
+            /* Ensuring smoother animation */
+            .no-animation {
+                animation: none !important;
+            }
+        </style>
     </head>
 
     <body>
@@ -90,7 +93,7 @@
                 </div>
             </div>
 
-            <div id="circleDiv"  class=" relative circle h-[400px] mt-5 rounded-full overflow-hidden">
+            <div id="circleDiv" class=" relative circle h-[400px] mt-5 rounded-full overflow-hidden">
                 <img class="absolute cover w-70 h-80 top-36 left-24 object-cover z-40"
                     src="{{ asset('images/girl.png') }}" alt="Your Image">
             </div>
@@ -467,22 +470,22 @@
         </section>
 
 
-       
+
 
         <x-footer />
 
-       
+
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 const circleDiv = document.getElementById("circleDiv");
                 const textDiv = document.getElementById("textDiv");
-        
+
                 function checkVisibility(element) {
                     const rect = element.getBoundingClientRect();
                     return rect.top >= 0 && rect.bottom <= window.innerHeight;
                 }
-        
+
                 function handleScroll() {
                     if (checkVisibility(circleDiv)) {
                         circleDiv.classList.remove("no-animation");
@@ -491,7 +494,7 @@
                         circleDiv.classList.remove("slide-from-right");
                         circleDiv.classList.add("no-animation");
                     }
-        
+
                     if (checkVisibility(textDiv)) {
                         textDiv.classList.remove("no-animation");
                         textDiv.classList.add("slide-from-left");
@@ -500,11 +503,26 @@
                         textDiv.classList.add("no-animation");
                     }
                 }
-        
+
                 window.addEventListener("scroll", handleScroll);
-        
+
                 // Initially, trigger animation check
                 handleScroll();
+
+
+
+                const partenaireLink = document.querySelector('li:nth-child(5)'); // Select the "Partenaire" list item
+        const dropdownMenu = partenaireLink.querySelector('ul'); // Select the nested dropdown menu
+
+        partenaireLink.addEventListener('mouseenter', function () {
+            dropdownMenu.classList.remove('hidden'); // Show the dropdown menu when hovering over the "Partenaire" link
+        });
+
+        partenaireLink.addEventListener('mouseleave', function () {
+            dropdownMenu.classList.add('hidden'); // Hide the dropdown menu when mouse leaves the "Partenaire" link
+        });
+        // Close dropdown when clicking outside
+             
             });
         </script>
 
