@@ -41,9 +41,9 @@ class CycleEducativeController extends Controller
             // Attach the selected matières to the cycle
             $cycle->matieres()->attach($request->input('matiere_ids'));
 
-            return redirect()->route('cycles.index')->with('success', 'Cycle created successfully');
+            return redirect()->back()->with('success', 'Cycle created successfully');
         } catch (\Exception $e) {
-            // Handle any errors
+            
             return redirect()->back()->with('error', 'Failed to create cycle. Please try again.');
         }
     }

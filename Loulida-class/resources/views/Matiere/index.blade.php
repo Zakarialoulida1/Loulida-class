@@ -1,5 +1,10 @@
-<x-app title="Matieres">
 
+    @extends('layouts.master')
+
+    @section('title', 'Matieres')
+    
+    @section('content')
+        
 
         <div class="flex-none w-full max-w-full px-3 mt-8">
             <div
@@ -144,7 +149,7 @@
                                    
                             </svg> </button>
 
-</x-app>
+
 
 <script>
 
@@ -158,3 +163,4 @@ function editmatiere(matiereId, matiereName) {
         modal.classList.toggle('hidden');
     }
 </script>
+@stop

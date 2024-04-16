@@ -14,6 +14,10 @@ class Matiere extends Model
     {
         return $this->belongsToMany(CycleEducative::class, 'cycle_matiere');
     }
+    public function cours()
+    {
+        return $this->hasMany(Cours::class);
+    }
 
     
 }

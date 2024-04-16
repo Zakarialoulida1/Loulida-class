@@ -3,7 +3,16 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Cours;
+use App\Models\CoursFile;
+use App\Policies\ExerciseFilePolicy;
+use Illuminate\Support\Facades\Gate ;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
+use App\Models\ExerciseFile;
+use App\Policies\CoursFilePolicy;
+use App\Policies\CoursPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,16 +22,19 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+     ExerciseFile::class => ExerciseFilePolicy::class,
+     Cours::class =>CoursPolicy::class,
+     CoursFile::class => CoursFilePolicy::class,
     ];
 
     /**
      * Register any authentication / authorization services.
      */
-    public function boot(): void
-    {
-        $this->registerPolicies();
+  
 
-        //
-    }
+     public function boot()
+     {
+         $this->registerPolicies();
+ 
+   }
 }

@@ -29,39 +29,30 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-
-
     {
-
-       
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Assuming image is an optional field
-           
+
 
         ]);
+        if (request()->hasFile('image')) {
+            $image = request()->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+        } else {
+            $imageName = 'service.jpg';
+        }
 
 
-        
-
-
-if (request()->hasFile('image')) {
-    $image = request()->file('image');
-    $imageName = time() . '.' . $image->getClientOriginalExtension();
-    $image->move(public_path('images'), $imageName);
-} else {
-    $imageName = 'service.jpg';
-}
-
-
-$user = User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'image'=> $imageName,
-           
+            'image' => $imageName,
+
         ]);
 
         event(new Registered($user));
@@ -69,5 +60,17 @@ $user = User::create([
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function BecomePartnerOrTeacher()
+    {
+        return view('Partenaire.index');
+    }
+
+    public function BecomeTeacher()
+    {
+    }
+    public function BecomePartner()
+    {
     }
 }

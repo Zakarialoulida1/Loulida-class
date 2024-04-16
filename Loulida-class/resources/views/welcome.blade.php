@@ -78,6 +78,8 @@
 
     <body>
         <x-navbar />
+
+        
         <div class="flex flex-col items-center justify-center md:flex-row md:justify-around w-full md:items-center">
             <div id="textDiv" class="  mt-4 md:m-0 w-[80%] md:w-[48%] lg:mt-24">
                 <p class="text-7xl text-center">up your <span class="text-[#EF4A81]">skills</span>
@@ -515,6 +517,7 @@
         const dropdownMenu = partenaireLink.querySelector('ul'); // Select the nested dropdown menu
 
         partenaireLink.addEventListener('mouseenter', function () {
+            console.log('fcghbj');
             dropdownMenu.classList.remove('hidden'); // Show the dropdown menu when hovering over the "Partenaire" link
         });
 

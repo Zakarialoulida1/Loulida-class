@@ -20,4 +20,5 @@ class CycleEducative extends Model
     {
         return $this->belongsToMany(Matiere::class, 'cycle_matiere');
     }
+    
 }

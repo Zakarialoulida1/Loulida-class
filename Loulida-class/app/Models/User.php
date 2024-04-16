@@ -49,4 +49,11 @@ class User extends Authenticatable
 {
     return $this->ban === '1';
 }
+
+
+
+public function partner()
+{
+    return $this->hasOne(Partner::class);
+}
 }
