@@ -23,7 +23,7 @@
 
 <body>
 
-    <x-navbar />
+    <x-navbar  />
 
 
 
