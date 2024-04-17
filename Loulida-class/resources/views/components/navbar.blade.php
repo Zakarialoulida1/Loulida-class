@@ -1,15 +1,15 @@
 <!-- component -->
-<nav class="bg-gray-200 shadow shadow-gray-300 w-100 px-8 md:px-auto">
-    <div class="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
+<nav class="bg-gray-200 shadow mb-16 shadow-gray-300 w-100  md:px-auto">
+    <div class="md:h-16 h-28  md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
         <!-- Logo -->
         <div class="text-indigo-500 md:order-1">
             <!-- Heroicon - Chip Outline -->
             <img class="w-24" src="{{ asset('images/logos.png') }}" alt="">
         </div>
         <div id="menu-items"
-        class="hidden md:flex md:items-center order-3  w-full md:justify-between w-full md:w-auto space-x-4 md:order-2">
-        
-            <ul class="flex font-semibold justify-between">
+        class="hidden absolute md:top-16 top-20 md:center lg:flex lg:items-center order-3 w-full lg:justify-center  space-x-4">
+    
+            <ul class="flex flex-col w-full bg-gray-200 lg:flex-row font-semibold justify-between">
                 <!-- Active Link = text-indigo-500
                 Inactive Link = hover:text-indigo-500 -->
                 <li class="md:px-4 md:py-2 text-[#EF4A81]"><a href="/">Dashboard</a></li>
@@ -50,18 +50,18 @@
             </ul>
         </div>
 
-        <div class="order-2 mx-8  md:order-3">
+        <div class="order-2  flex items-center justify-between md:order-3">
 
         
           
             @auth
-                <div class="sm:fixed  flex sm:top-[-11px] sm:right-0 p-6 text-right z-10">
+                <div class="lg:fixed  sm:top-[-11px] sm:right-0 p-6 text-right z-10">
                     <button
                         class="profile-button inline-flex items-center px-3 mx-2 py-1 bg-gray-300 border border-transparent text-sm leading-4 font-medium rounded-md hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                        <svg class="w-8 h-8 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                        <svg class="w-4 h-4 md:w-6 md:h-6 md:mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                             <path fill="#000000"
                                 d="M280.4 148.3L96 300.1V464a16 16 0 0 0 16 16l112.1-.3a16 16 0 0 0 15.9-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.6a16 16 0 0 0 16 16.1L464 480a16 16 0 0 0 16-16V300L295.7 148.3a12.2 12.2 0 0 0 -15.3 0zM571.6 251.5L488 182.6V44.1a12 12 0 0 0 -12-12h-56a12 12 0 0 0 -12 12v72.6L318.5 43a48 48 0 0 0 -61 0L4.3 251.5a12 12 0 0 0 -1.6 16.9l25.5 31A12 12 0 0 0 45.2 301l235.2-193.7a12.2 12.2 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0 -1.7-16.9z" />
-                        </svg> {{ Auth()->user()->name }}
+                        </svg> <h1 class="hidden xl:flex">{{ Auth()->user()->name }}</h1>
                     </button>
                     
                     <ul
@@ -89,7 +89,7 @@
                             </form>
                         </li>
                     </ul>
-                 
+                    
                 </div>
             @else
                 <a href="{{ route('login') }}"
@@ -102,7 +102,7 @@
 
             @endauth
 
-            <div class="order-2  md:hidden">
+            <div class="lg:hidden sm:top-[-11px] sm:right-0 p-6 text-right">
                 <button id="burger-menu-toggle" class="focus:outline-none">
                     <svg class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -110,8 +110,6 @@
                     </svg>
                 </button>
             </div>
-
-
         </div>
 
     </div>
