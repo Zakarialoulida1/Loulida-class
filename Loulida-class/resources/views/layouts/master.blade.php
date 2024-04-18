@@ -30,7 +30,7 @@
 
     <main>
         @include('layouts.flashbag')
-        <div class="container  min-h-screen">
+        <div class="  ">
             @yield('content')
         </div>
     </main>

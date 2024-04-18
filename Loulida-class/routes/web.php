@@ -5,6 +5,7 @@ use App\Http\Controllers\CoursController;
 use App\Http\Controllers\CoursFileController;
 use App\Http\Controllers\CycleEducativeController;
 use App\Http\Controllers\ExerciseFileController;
+use App\Http\Controllers\FormationController;
 use App\Http\Controllers\MatiereController;
 use App\Http\Controllers\PartnerController;
 use App\Models\ExerciseFile;
@@ -56,5 +57,13 @@ Route::post('/exercise-files', [ExerciseFileController::class, 'store'])->name('
 Route::delete('/exercise-files/{exerciseFile}', [ExerciseFileController::class, 'destroy'])->name('exercise-files.destroy');
 Route::post('/exercise-files-with-correction', [ExerciseFileController::class, 'storeWithCorrection'])->name('exercise-files-with-correction.store');
 Route::resource('courses', CoursController::class);
+
+
+Route::get('/welcome', [FormationController::class, 'index'])->name('formation.index');
+Route::get('/formations/create', [FormationController::class, 'create'])->name('formations.create');
+Route::post('/formations', [FormationController::class, 'store'])->name('formations.store');
+// web.php
+
+Route::get('/matieres/{cycleId}', [FormationController::class, 'getMatieresByCycle'])->name('matieres.by_cycle');
 
 require __DIR__.'/auth.php';

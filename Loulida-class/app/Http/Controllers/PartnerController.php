@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Partner;
+use App\Models\User;
+use App\Notifications\YouBecomeaTeacherNotification;
 
 class PartnerController extends Controller
 {
@@ -63,9 +65,20 @@ class PartnerController extends Controller
 {
     $partner = Partner::findOrFail($id);
     $partner->status = 'valide'; // Assuming you're updating the status to 'valide'
-    $partner->save();
 
-    // Redirect back to the page where the request originated
+    $userId=$partner->user_id;
+    
+    $user = User::findOrFail(  $userId);
+
+
+    $data = [
+        'name' => $user->name,
+        'email' => $user->email,
+    ];
+    
+    $user->notify(new YouBecomeaTeacherNotification($data));
+ 
+    $partner->save();
     return redirect()->back()->with('success', 'Partner request confirmed successfully');
 }
 public function UnConfirm( $id)

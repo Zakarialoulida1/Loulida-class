@@ -85,3 +85,48 @@ label,
   transform-origin: center;
   cursor: pointer;
 }
+
+
+.circle {
+  width: 400px;
+
+  padding-bottom: 28%;
+  /* This creates a perfect circle */
+  background-color: #219EBC;
+  /* You can change the color as needed */
+  border-radius: 50%;
+  /* This creates the circular shape */
+}
+
+@keyframes slideFromRight {
+  from {
+      transform: translateX(100%);
+  }
+
+  to {
+      transform: translateX(0);
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+      transform: translateX(-100%);
+  }
+
+  to {
+      transform: translateX(0);
+  }
+}
+
+.slide-from-right {
+  animation: slideFromRight 1s forwards;
+}
+
+.slide-from-left {
+  animation: slideFromLeft 1s forwards;
+}
+
+/* Ensuring smoother animation */
+.no-animation {
+  animation: none !important;
+}

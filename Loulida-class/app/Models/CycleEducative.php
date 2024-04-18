@@ -20,5 +20,9 @@ class CycleEducative extends Model
     {
         return $this->belongsToMany(Matiere::class, 'cycle_matiere');
     }
+    public function formations()
+    {
+        return $this->hasMany(Formation::class);
+    }
     
 }

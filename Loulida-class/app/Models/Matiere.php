@@ -9,7 +9,10 @@ class Matiere extends Model
 {
     use HasFactory;
 
-
+    public function formations()
+    {
+        return $this->belongsToMany(Formation::class);
+    }
     public function cycles()
     {
         return $this->belongsToMany(CycleEducative::class, 'cycle_matiere');
