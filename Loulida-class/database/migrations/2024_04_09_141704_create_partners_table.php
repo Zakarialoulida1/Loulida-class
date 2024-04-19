@@ -14,6 +14,7 @@ class CreatePartnersTable extends Migration
             $table->enum('type',['Teacher','Investor']); // Indicates whether the partner is a teacher or investor
             $table->string('phone')->nullable();
             $table->string('Address');
+          
             $table->text('description')->nullable();
             $table->string('cv')->nullable(); // Path to the CV file
            $table->enum('status',['non_valide','validé'])->default('non_valide');  

@@ -21,6 +21,9 @@ class Matiere extends Model
     {
         return $this->hasMany(Cours::class);
     }
-
+    public function partners()
+    {
+        return $this->hasMany(Partner::class);
+    }
     
 }

@@ -62,7 +62,8 @@ Route::resource('courses', CoursController::class);
 Route::get('/welcome', [FormationController::class, 'index'])->name('formation.index');
 Route::get('/formations/create', [FormationController::class, 'create'])->name('formations.create');
 Route::post('/formations', [FormationController::class, 'store'])->name('formations.store');
-// web.php
+Route::get('/load-more-data', [FormationController::class, 'loadMoreData']);
+
 
 Route::get('/matieres/{cycleId}', [FormationController::class, 'getMatieresByCycle'])->name('matieres.by_cycle');
 

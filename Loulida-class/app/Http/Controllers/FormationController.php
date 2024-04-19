@@ -17,12 +17,25 @@ class FormationController extends Controller
    
     public function index()
     {
-        $formations = Formation::with('matieres')->get();
-        $partners = Partner::where('type', 'teacher')->where('status', 'validé')->get();
+        $formations = Formation::with('matieres')->take(6)->get();
+        $partners = Partner::where('type', 'teacher')->where('status', 'validé')->take(8)->get();
    
         return view('welcome', compact('formations', 'partners'));
     }
     
+
+    public function loadMoreData()
+{
+   
+    $formations = Formation::with('matieres')->with('cycleEducative')->get();
+
+    $partners = Partner::where('type', 'teacher')->where('status', 'validé')->get();
+
+    return response()->json([
+        'formations' => $formations,
+        'partners' => $partners,
+    ]);
+}
     public function create()
     {
         $cycles = CycleEducative::all();

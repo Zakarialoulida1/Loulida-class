@@ -55,6 +55,35 @@
                         @error('cv')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
+
+
+                        <div class="input__wrapper">
+                            <input id="facebookName" type="text" name="Social_Media[facebookName]" placeholder="Your Facebook Name"
+                                class="input__field w-[43vw]  xl:w-[30vw]">
+                            <label for="facebookName" class="input__label">Facebook Name</label>
+                        </div>
+                        <div class="input__wrapper">
+                            <input id="instagramName" type="text" name="Social_Media[instagramName]" placeholder="Your Instagram Name"
+                                class="input__field w-[43vw]  xl:w-[30vw]">
+                            <label for="instagramName" class="input__label">Instagram Name</label>
+                        </div>
+                        <div class="input__wrapper">
+                            <input id="linkedinName" type="text" name="Social_Media[linkedinName]" placeholder="Your LinkedIn Name"
+                                class="input__field w-[43vw]  xl:w-[30vw]">
+                            <label for="linkedinName" class="input__label">LinkedIn link</label>
+                        </div>
+                        <div class="input__wrapper">
+                        <select  name="matiere_id" required class="input__field ">
+                            <option value="" disabled selected>Select a Profession </option>
+                            @foreach($matieres as $matiere)
+                                <option class="" value="{{ $matiere->id }}">{{ $matiere->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                     
+                        @error('matiere_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <button class=" mt-4 bg-[#f8ae2a] w-fit sm:w-[43vw] p-4 center text-center hover:bg-[#fb8500] "
                             type="submit"> Envoyer </button>
                       

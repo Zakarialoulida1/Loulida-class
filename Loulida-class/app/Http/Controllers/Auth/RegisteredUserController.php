@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Matiere;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -64,7 +65,8 @@ class RegisteredUserController extends Controller
 
     public function BecomePartnerOrTeacher()
     {
-        return view('Partenaire.index');
+       $matieres= Matiere::all();
+        return view('Partenaire.index' ,compact('matieres'));
     }
 
     public function BecomeTeacher()
