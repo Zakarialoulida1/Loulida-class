@@ -16,6 +16,7 @@ class CreateFormationsTable extends Migration
             $table->integer('duration_months'); // Change duration to duration_months duration_months
             $table->text('description')->nullable();
             $table->string('image')->nullable(); 
+          
             $table->timestamps();
         });
 

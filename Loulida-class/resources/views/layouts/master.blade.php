@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         integrity="sha512-***********" crossorigin="anonymous" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +24,7 @@
 
 <body>
 
-    <x-navbar  />
+    <x-navbar />
 
 
 
@@ -40,53 +41,60 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        
-        const partenaireLink = document.querySelector('li:nth-child(5)'); // Select the "Partenaire" list item
+
+        const partenaireLink = document.querySelector('.becompartners'); // Select the "Partenaire" list item
         const dropdownMenu = partenaireLink.querySelector('ul'); // Select the nested dropdown menu
 
         partenaireLink.addEventListener('mouseenter', function() {
             dropdownMenu.classList.remove(
-            'hidden'); // Show the dropdown menu when hovering over the "Partenaire" link
+                'hidden'); // Show the dropdown menu when hovering over the "Partenaire" link
         });
         partenaireLink.addEventListener('mouseleave', function() {
-                      dropdownMenu.classList.add(
-            'hidden'); // Hide the dropdown menu when mouse leaves the "Partenaire" link
-        });
-        
-        
-            var textarea = document.getElementById('Description');
-            var placeholder = 'Description de votre profession (matières, Langue d\'enseignement) ';
-
-            textarea.value = placeholder;
-
-            textarea.addEventListener('focus', function() {
-                if (this.value === placeholder) {
-                    this.value = '';
-                }
-            });
-
-            textarea.addEventListener('blur', function() {
-                if (this.value === '') {
-                    this.value = placeholder;
-                }
-            });
-
-
-
-           
-    document.getElementById('teacherFormBtn').addEventListener('click', function() {
-        document.getElementById('teacherForm').style.display = 'block';
-        document.getElementById('investorForm').style.display = 'none';
-    });
-
-    document.getElementById('investorFormBtn').addEventListener('click', function() {
-        document.getElementById('teacherForm').style.display = 'none';
-        document.getElementById('investorForm').style.display = 'block';
-    });
-
+            dropdownMenu.classList.add(
+                'hidden'); // Hide the dropdown menu when mouse leaves the "Partenaire" link
         });
 
-    
+
+        var textarea = document.getElementById('Description');
+        var placeholder = 'Description de votre profession (matières, Langue d\'enseignement) ';
+
+        textarea.value = placeholder;
+
+        textarea.addEventListener('focus', function() {
+            if (this.value === placeholder) {
+                this.value = '';
+            }
+        });
+
+        textarea.addEventListener('blur', function() {
+            if (this.value === '') {
+                this.value = placeholder;
+            }
+        });
+
+
+
+
+        document.getElementById('teacherFormBtn').addEventListener('click', function() {
+            document.getElementById('teacherForm').style.display = 'block';
+            document.getElementById('investorForm').style.display = 'none';
+        });
+
+        document.getElementById('investorFormBtn').addEventListener('click', function() {
+            document.getElementById('teacherForm').style.display = 'none';
+            document.getElementById('investorForm').style.display = 'block';
+        });
+
+        
+  
+
+    });  const burgerMenuToggle = document.getElementById('burger-menu-toggle');
+    const menuItems = document.getElementById('menu-items');
+
+    burgerMenuToggle.addEventListener('click', function() {
+        console.log('hjjj');
+        menuItems.classList.toggle('hidden');
+    });
 </script>
 
 

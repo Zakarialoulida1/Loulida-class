@@ -16,6 +16,7 @@ class Formation extends Model
         'duration_months',
         'description',
   'image',
+  'name'
         // Add other fillable fields as needed
     ];
 
@@ -27,5 +28,9 @@ class Formation extends Model
     public function matieres()
     {
         return $this->belongsToMany(Matiere::class);
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

@@ -32,6 +32,8 @@ class ExerciseFileController extends Controller
      */
     public function store(Request $request)
     {
+        
+       
         // Validate the uploaded files
         $request->validate([
             'exercise_files_without_correction.*' => 'required|file|mimes:pdf,doc,docx|max:10240', // Example validation rules
@@ -50,7 +52,8 @@ class ExerciseFileController extends Controller
 
     public function storeWithCorrection(Request $request)
     {
-        // Validate the uploaded files
+       
+       // Validate the uploaded files
         $request->validate([
             'exercise_files_with_correction.*' => 'required|file|mimes:pdf,doc,docx|max:10240', // Example validation rules
             'correction_files.*' => 'required|file|mimes:pdf,doc,docx|max:10240', // Example validation rules

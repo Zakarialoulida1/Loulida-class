@@ -202,10 +202,18 @@
     function editCycle(cycleId, cycleName, matiereIds) {
         document.getElementById('cycle-id').value = cycleId;
         document.getElementById('cycle-name').value = cycleName;
+        
+        // Uncheck all checkboxes first
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+
         // Check checkboxes for associated matieres
         matiereIds.forEach(id => {
             document.getElementById(`edit-matiere_${id}`).checked = true;
         });
+        
         toggleModal('update-form');
     }
 
@@ -214,3 +222,4 @@
         modal.classList.toggle('hidden');
     }
 </script>
+

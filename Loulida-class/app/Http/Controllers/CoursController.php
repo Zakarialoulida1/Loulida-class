@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Cours;
 use App\Models\CycleEducative;
+use App\Models\Formation;
 use App\Models\Matiere;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class CoursController extends Controller
@@ -17,7 +21,7 @@ class CoursController extends Controller
 
      public function index ()
 {
-    
+    $cycles = CycleEducative::with('matieres.cours.coursFiles')->get();
  // Récupérer tous les cycles éducatifs avec leurs matières et cours associés, où au moins un cours contient des cours_files
 // Récupérer tous les cycles éducatifs avec leurs matières et cours associés, mais seulement pour un cycle éducatif spécifique
 
@@ -45,9 +49,73 @@ class CoursController extends Controller
 
 // Récupérer tous les cycles éducatifs avec leurs matières et cours associés, où au moins un cours contient des cours_files
 
-    $cycles = CycleEducative::with('matieres.cours.coursFiles')->get();
 
- 
+
+
+
+// $cycles = CycleEducative::with(['matieres' => function ($query) use ($paidFormationIds) {
+//     $query->whereHas('formations', function ($query) use ($paidFormationIds) {
+//         $query->whereIn('id', $paidFormationIds);
+//     });
+// }, 'matieres.cours.coursFiles'])
+//     ->whereHas('formations', function ($query) use ($paidFormationIds) {
+//         $query->whereIn('id', $paidFormationIds);
+//     })
+//     ->get();
+
+// $formation =Formation::with(['matieres'=> function ($query) use ($paidFormationIds) {
+//         $query->whereHas('formations', function ($query) use ($paidFormationIds) {
+//            $query->whereIn('id', $paidFormationIds);
+//      });
+
+
+
+
+
+
+//    $formation=Formation::with('matieres.cours','cycleEducative')->findOrFail($paidFormationIds[0]);
+
+
+
+
+
+
+
+// $user = Auth::user(); // Assuming you're using authentication
+
+// // Retrieve the user's payments with a status of 'validé'
+// $payments = Payment::where('user_id', $user->id)
+//     ->where('status', 'validé')
+//     ->get();
+
+// $formationsWithCourses = [];
+
+// // Iterate over each payment
+// foreach ($payments as $payment) {
+//     // Get the corresponding formation
+//     $formation = $payment->formation;
+
+//     // Get the courses associated with the formation
+//     $matieres = $formation->matieres;
+// foreach ($matieres as $key ) {
+//     ddd($key->cours);
+// } ;
+//         // Retrieve course files and exercise files for each course
+      
+//         // Store the formation, course, course files, and exercise files
+//         $formationsWithCourses[] = [
+//             'formation' => $formation,
+//             'course' => $matieres,
+            
+           
+//         ];
+    
+// }
+
+// Now $formationsWithCourses contains all the information you need
+// You can pass it to your view to display it as required
+
+
 
 
     return view('Cours.index', compact('cycles'));

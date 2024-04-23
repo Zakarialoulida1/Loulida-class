@@ -20,6 +20,8 @@ class CreatePartnersTable extends Migration
            $table->enum('status',['non_valide','validé'])->default('non_valide');  
          
            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+           $table->json('Social_Media')->nullable(); 
+           $table->foreignId('matiere_id')->constrained()->onDelete('cascade'); // Foreign key for matiere table
         
             $table->timestamps();
         });

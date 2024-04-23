@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('formation_id');
-            $table->string('path')->nullable();
-            $table->enum('status',['non_valide','validé'])->default('non_valide');  
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+          
+            $table->foreignId('formation_id')->constrained()->onDelete('cascade');
+           
+         $table->string('path')->nullable();
+            $table->enum('status',['non_valide','validé'])->default('non_valide'); 
+            
+            $table->unique(['user_id', 'formation_id']);
          
         });
     }

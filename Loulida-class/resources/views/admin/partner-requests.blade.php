@@ -80,10 +80,11 @@
                         
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <!-- Button to view details -->
-                            <button onclick="showDetails('{{ $partner }}')"
-                                class="text-indigo-600 hover:text-indigo-900 focus:outline-none">
-                                View Details
-                            </button>
+                            
+                            <button onclick="showDetails({{ json_encode($partner) }})"
+                            class="text-indigo-600 hover:text-indigo-900 focus:outline-none">
+                            View Details
+                        </button>
                         </td>
                     </tr>
                 @endforeach
@@ -179,65 +180,29 @@
             <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
             <script src="https://unpkg.com/tippy.js@4"></script>
             <script>
-                // document.addEventListener('DOMContentLoaded', function() {
-                //     document.querySelectorAll('form[id^="confirmForm"]').forEach(form => {
-                //         form.addEventListener('submit', function(event) {
-                //             event.preventDefault(); // Prevent the default form submission
-                //             const partnerId = form.id.replace('confirmForm', '');
-                //             confirmPartnerRequest(partnerId); // Call a function to handle the confirmation
-                //         });
-                //     });
-                // });
-
-                // function confirmPartnerRequest(partnerId) {
-                //     // Create a new FormData object containing the form data
-                //     const formData = new FormData();
-                //     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                //     'content')); // Add CSRF token
-                //     formData.append('_method', 'PATCH'); // Add the method
-                //     // Perform an AJAX request to update the status
-                //     fetch(`/partner-requests/${partnerId}`, {
-                //             method: 'POST',
-                //             body: formData
-                //         })
-                //         .then(response => {
-                //             if (response.ok) {
-                //                 // Reload the page or update UI as needed
-                //                 window.location.reload(); // Reload the page
-                //             } else {
-                //                 // Handle errors
-                //                 console.error('Error updating status');
-                //             }
-                //         })
-                //         .catch(error => {
-                //             console.error('Error:', error);
-                //         });
-                // }
 
                 function showDetails(partner) {
+    document.getElementById('partnerName').innerText = partner.user.name;
+    document.getElementById('image').src = "/images/" + partner.user.image;
+    document.getElementById('Address').innerText = partner.Address;
+    document.getElementById('Type').innerText = partner.type;
 
-                    const user = JSON.parse(partner)
-                    console.log(user);
-                    document.getElementById('partnerName').innerText = user.user.name;
-                    document.getElementById('image').src = "/images/" + user.user.image;
-                    document.getElementById('Address').innerText = user.Address;
-                    document.getElementById('Type').innerText = user.type;
+    document.querySelector('.block.lg\\:hidden.rounded-full.shadow-xl.mx-auto.-mt-16.h-48.w-48.bg-cover.bg-center')
+        .style.backgroundImage = "url('/images/" + partner.user.image + "')";
 
-                    document.querySelector('.block.lg\\:hidden.rounded-full.shadow-xl.mx-auto.-mt-16.h-48.w-48.bg-cover.bg-center')
-                        .style.backgroundImage = "url('/images/" + user.user.image + "')";
+    document.getElementById('partnerPhone').innerText = partner.phone;
+    document.getElementById('partnergmail').innerText = partner.user.email;
+    document.getElementById('cvLink').href = "/cv/" + partner.cv;
 
-                    document.getElementById('partnerPhone').innerText = user.phone;
-                    document.getElementById('partnergmail').innerText = user.user.email;
-                    document.getElementById('cvLink').href = "/cv/" + user.cv;
+    document.getElementById('partnerPhonetel').href = "tel:" + partner.phone;
+    document.getElementById('partnergmailmailto').href = "mailto:" + partner.user.email;
 
-                    document.getElementById('partnerPhonetel').href = "tel:" + user.phone;
-                    document.getElementById('partnergmailmailto').href = "mailto:" + user.user.email;
+    document.getElementById('description').innerText = partner.description;
 
-                    document.getElementById('description').innerText = user.description;
+    // Show the pop-up
+    document.getElementById('popup').classList.remove('hidden');
+}
 
-                    // Show the pop-up
-                    document.getElementById('popup').classList.remove('hidden');
-                }
 
                 function closePopup() {
                     // Hide the pop-up

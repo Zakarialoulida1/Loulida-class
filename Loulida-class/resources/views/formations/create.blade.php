@@ -3,24 +3,21 @@
 @extends('layouts.master')
 
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+ 
     <div class="flex items-center inset-0 justify-center">
         <div class="shadow-2xl  flex flex-col items-center mt-4 justify-center rounded-md m-8 w-[90%] sm:w-[80%]">
             <h1 class="text-center m-4 text-3xl underline">Create Formation</h1>
-           
-           
             @if ($errors->any())
-            <div class="text-red">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-            <form class="flex flex-col items-center justify-center" action="{{ route('formations.store') }}" enctype="multipart/form-data" method="POST">
+                <div class="text-red">
+                    <ul class="text-red">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form class="flex flex-col items-center justify-center" action="{{ route('formations.store') }}"
+                enctype="multipart/form-data" method="POST">
                 @csrf
 
 
@@ -30,8 +27,7 @@
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
                             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                             </svg>
                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400 w-full"><span
@@ -44,8 +40,8 @@
                 </div>
 
                 @error('image')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="input__wrapper ">
                     <label class="input__label">Cycle Educative</label>
                     <select name="cycle_educative_id" id="cycle_educative_id" class="input__field w-[65vw] md:w-[40vw] ">
@@ -56,47 +52,56 @@
                     </select>
                 </div>
                 @error('cycle_educative_id')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="  form-group flex flex-wrap gap-3">
                     <label>Matieres</label><br>
                     <!-- Matieres checkboxes will be dynamically populated here -->
                 </div>
                 @error('Matieres')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+
+                <div class="input__wrapper ">
+                    <label class="input__label" for="name">Name</label>
+                    <input type="text" name="name" id="name" class="input__field w-[65vw] md:w-[40vw]"
+                        min="1">
+                </div>
+                @error('name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="input__wrapper ">
                     <label class="input__label" for="available_place">Available Place</label>
                     <input type="number" name="available_place" id="available_place"
                         class="input__field w-[65vw] md:w-[40vw]" min="1">
                 </div>
                 @error('available_place')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="input__wrapper ">
                     <label class="input__label" for="price">Price</label>
                     <input type="number" name="price" id="price" class="input__field w-[65vw] md:w-[40vw]"
                         min="1">
                 </div>
                 @error('price')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <div class="input__wrapper ">
                     <label for="duration_months" class="input__label">duration_months (in Months)</label>
-                    <input type="number" name="duration_months" id="duration_months" class="input__field w-[65vw] md:w-[40vw]"
-                        min="0" step="0.01">
+                    <input type="number" name="duration_months" id="duration_months"
+                        class="input__field w-[65vw] md:w-[40vw]" min="0" step="0.01">
                 </div>
                 @error('duration_months')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="input__wrapper ">
                     <label for="description" class="input__label">Description</label>
                     <textarea name="description" id="description" class="input__field w-[65vw] md:w-[40vw]"></textarea>
                 </div>
                 @error('description')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <button class="m-4 bg-[#f8ae2a] w-[50vw] sm:w-[25vw] mx-auto p-4  text-center hover:bg-[#fb8500]"
                     type="submit">Submit</button>

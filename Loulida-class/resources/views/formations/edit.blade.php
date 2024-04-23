@@ -9,7 +9,7 @@
                 <div class="text-red">
                     <ul>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            <li class="text-red-400">{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -48,7 +48,9 @@
                     <label class="input__label">Cycle Educative</label>
                     <select name="cycle_educative_id" id="cycle_educative_id" class="input__field w-[65vw] md:w-[40vw] ">
                         @foreach ($cycles as $cycle)
-                            <option value="{{ $cycle->id }}" {{ $cycle->id == $formation->cycle_educative_id ? 'selected' : '' }}>{{ $cycle->name }}</option>
+                            <option value="{{ $cycle->id }}"
+                                {{ $cycle->id == $formation->cycle_educative_id ? 'selected' : '' }}>{{ $cycle->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -60,17 +62,22 @@
                     @foreach ($matieres as $matiere)
                         <div class="flex w-fit items-center  flex-wrap gap-4 mr-2">
                             <input type="checkbox" name="matieres[]" id="matiere_{{ $matiere->id }}"
-                                value="{{ $matiere->id }}" {{ in_array($matiere->id, $formation->matieres->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                value="{{ $matiere->id }}"
+                                {{ in_array($matiere->id, $formation->matieres->pluck('id')->toArray()) ? 'checked' : '' }}>
                             <span for="matiere_{{ $matiere->id }}">{{ $matiere->name }}</span>
                         </div>
                     @endforeach
                 </div>
-
+                <div class="input__wrapper ">
+                    <label class="input__label" for="name">Name</label>
+                    <input type="text" name="name" id="name" class="input__field w-[65vw] md:w-[40vw]"
+                        value="{{ $formation->name }}">
+                </div>
                 <!-- Available Place field -->
                 <div class="input__wrapper ">
                     <label class="input__label" for="available_place">Available Place</label>
-                    <input type="number" name="available_place" id="available_place" class="input__field w-[65vw] md:w-[40vw]"
-                        min="1" value="{{ $formation->available_place }}">
+                    <input type="number" name="available_place" id="available_place"
+                        class="input__field w-[65vw] md:w-[40vw]" min="1" value="{{ $formation->available_place }}">
                 </div>
 
                 <!-- Price field -->
@@ -80,11 +87,13 @@
                         min="1" value="{{ $formation->price }}">
                 </div>
 
+
                 <!-- Duration field -->
                 <div class="input__wrapper flex ">
                     <label for="duration_months" class="input__label">duration_months (in Months)</label>
-                    <input type="number" name="duration_months" id="duration_months" class="input__field w-[65vw] md:w-[40vw]"
-                        min="0" step="0.01" value="{{ $formation->duration_months }}">
+                    <input type="number" name="duration_months" id="duration_months"
+                        class="input__field w-[65vw] md:w-[40vw]" min="0" step="0.01"
+                        value="{{ $formation->duration_months }}">
                 </div>
 
                 <!-- Description field -->
@@ -98,4 +107,38 @@
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById('cycle_educative_id').addEventListener('change', function() {
+            var cycleId = this.value;
+            fetch('/matieres/' + cycleId)
+                .then(response => response.json())
+                .then(data => {
+                    var matieresContainer = document.querySelector('.form-group ');
+                    matieresContainer.innerHTML = ''; // Clear previous content
+                    var label = document.createElement('label');
+                    label.textContent = 'Matieres';
+                    matieresContainer.appendChild(label); // Add Matieres label
+                    console.log(data);
+                    data.forEach(matiere => {
+                        var matiereDiv = document.createElement('div');
+                        matiereDiv.classList.add('flex', 'items-center',
+                            'gap-4'); // Add Tailwind classes
+
+                        var checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.name = 'matieres[]';
+                        checkbox.value = matiere.id;
+                        checkbox.id = 'matiere_' + matiere.id;
+                        console.log(matiere);
+                        var label = document.createElement('h');
+                        label.htmlFor = 'matiere_' + matiere.id;
+                        label.textContent = matiere.name; // Set matiere name
+
+                        matiereDiv.appendChild(checkbox);
+                        matiereDiv.appendChild(label);
+                        matieresContainer.appendChild(matiereDiv);
+                    });
+                });
+        });
+    </script>
 @endsection

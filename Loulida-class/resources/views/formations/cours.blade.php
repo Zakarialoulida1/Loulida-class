@@ -4,13 +4,13 @@
 
 @section('content')
 
-
+<div class="min-h-[60vh] ">
     @foreach ($cycles as $cycle)
         <div class="m-8">
 
             <button class="cycle-toggle flex  text-semibold text-3xl"> <img class="w-8"
                     src="{{ asset('images/folder.png') }}" alt="">
-                {{ $cycle->cycleEducative->name }}</button>
+                {{ $cycle->name }}(  {{ $cycle->cycleEducative->name }})</button>
             <div class="cycle-matieres flex flex-col" style="display: none;">
                 @foreach ($cycle->matieres as $matiere)
                     <div class="ml-8">
@@ -133,7 +133,7 @@
 
                                                     <td
                                                         class="p-2 relative align-middle bg-transparent border-b dark:border-white/40  shadow-transparent">
-                                                        @if ($course->exerciseFiles->isNotEmpty() && $course->cycle_educative_id === $cycle->id)
+                                                        @if ($course->exerciseFiles->isNotEmpty() && $course->cycle_educative_id === $cycle->cycleEducative->id)
                                                             <ul class="underline text-blue-500 text">
                                                                 @foreach ($course->exerciseFiles as $file)
                                                                     <li>
@@ -368,7 +368,7 @@
         </div>
         <hr>
     @endforeach
-
+</div>
     <script>
         // Add event listener to toggle the cycle matières visibility
         document.querySelectorAll('.cycle-toggle').forEach(button => {

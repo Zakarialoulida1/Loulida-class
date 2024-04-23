@@ -128,6 +128,8 @@
 
                                                             </div>
                                                         </div>
+
+                                                        {{ $course->id }}
                                                     </td>
 
                                                     <td
@@ -137,7 +139,9 @@
                                                                 @foreach ($course->exerciseFiles as $file)
                                                                     <li>
                                                                         <div class="flex m-2 ">
-                                                                            <div class="relative w-fit"> <a
+                                                                            <div class="relative w-fit"> 
+                                                                                
+                                                                                <a
                                                                                     href="{{ asset('storage/' . substr($file->path, 7)) }}"
                                                                                     target="_blank"> <img
                                                                                         class="w-10 inline-block align-middle"
@@ -176,6 +180,7 @@
                                                             </ul>
                                                         @endif
                                                         <svg class="w-8 h-8 text-green-500 cursor-pointer bottom-2 right-2 absolute add-exercise-file-icon"
+                                                            data-course-id="{{ $course->id }}"
                                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                             fill="none" stroke="currentColor" stroke-width="2"
                                                             stroke-linecap="round" stroke-linejoin="round">
@@ -186,95 +191,12 @@
                                                                 y2="12"></line>
                                                         </svg>
 
-                                                        <div
-                                                            class="exercice-forms hidden modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                                                            <div
-                                                                class="relative bg-gray-200 rounded-lg p-8 max-w-md w-full">
-                                                                <div class=" flex justify-around"> <button
-                                                                        id="exercise-files-with-correction-btn"
-                                                                        class=" w-32 bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
-                                                                        Exercise Files with Correction</button>
-
-                                                                    <!-- Button to choose the form for exercise files without correction -->
-                                                                    <button id="exercise-files-without-correction-btn"
-                                                                        class="w-32 bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
-                                                                        Exercise Files without Correction</button>
-                                                                </div>
-                                                                <!-- Form for adding an exercise file -->
-                                                                <div class="hidden exercise-file-form-with-correction ">
-                                                                    <div
-                                                                        class="bg-gray-200 rounded-lg p-8 max-w-md w-full">
-                                                                        <form
-                                                                            action="{{ route('exercise-files-with-correction.store') }}"
-                                                                            method="post" enctype="multipart/form-data">
-                                                                            @csrf
-                                                                            <input type="hidden" name="course_id"
-                                                                                value="{{ $course->id }}">
-                                                                            <div class="input__wrapper">
-                                                                                <label for="exercise_files_with_correction"
-                                                                                    class="input__label">Exercise Files
-                                                                                    (with correction)
-                                                                                    :</label>
-                                                                                <input type="file"
-                                                                                    id="exercise_files_with_correction"
-                                                                                    name="exercise_files_with_correction[]"
-                                                                                    multiple class="input__field">
-                                                                            </div>
-                                                                            <!-- Add input for correction files if needed -->
-                                                                            <div class="input__wrapper">
-                                                                                <label for="correction_files"
-                                                                                    class="input__label">Correction
-                                                                                    Files:</label>
-                                                                                <input type="file"
-                                                                                    id="correction_files"
-                                                                                    name="correction_files[]" multiple
-                                                                                    class="input__field">
-                                                                            </div>
-                                                                            <button type="submit"
-                                                                                class="bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
-                                                                                File</button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Form for adding an exercise file without correction -->
-                                                                <div class="hidden exercise-file-form-without-correction ">
-                                                                    <div
-                                                                        class="bg-gray-200 rounded-lg p-8 max-w-md w-full">
-                                                                        <form action="{{ route('exercise-files.store') }}"
-                                                                            method="post" enctype="multipart/form-data">
-                                                                            @csrf
-                                                                            <input type="hidden" name="course_id"
-                                                                                value="{{ $course->id }}">
-                                                                            <div class="input__wrapper">
-                                                                                <label
-                                                                                    for="exercise_files_without_correction"
-                                                                                    class="input__label">Exercise Files
-                                                                                    (without correction):</label>
-                                                                                <input type="file"
-                                                                                    id="exercise_files_without_correction"
-                                                                                    name="exercise_files_without_correction[]"
-                                                                                    multiple class="input__field">
-                                                                            </div>
-                                                                            <button type="submit"
-                                                                                class="bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
-                                                                                File</button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                                <button
-                                                                    class="absolute top-0 right-0 mt-4 mr-4 text-red-500 close-modal text-3xl">&times;</button>
-
-                                                            </div>
 
 
 
-
-                                                        </div>
                                                     </td>
 
-                                                    <td
-                                                        class="  bg-transparent border-b  shadow-transparent">
+                                                    <td class="  bg-transparent border-b  shadow-transparent">
                                                         <!-- Delete button for the course -->
                                                         <form action="{{ route('courses.destroy', $course->id) }}"
                                                             method="post">
@@ -305,44 +227,43 @@
                                                             class="hidden update-course-form modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                                                             <div
                                                                 class="relative bg-gray-200 rounded-lg p-8 max-w-md w-full">
-                                                                 <div
-                                                                        class="bg-gray-200 rounded-lg  max-w-md w-full">
-                                                                        <h1 class="text-center text-bold text-2xl" >Update Your cours</h1>
-                                                                <form  action="{{ route('courses.update', $course->id) }}"
-                                                                    method="post" class="flex mt-4 mr-4 flex-col">
-                                                                    @csrf
-                                                                    @method('put')
-                                                                    <!-- Populate the form fields with existing course information -->
-                                                                  
-                                                                <!-- Add other course fields here -->
-                                                                 
-                                                                       
+                                                                <div class="bg-gray-200 rounded-lg  max-w-md w-full">
+                                                                    <h1 class="text-center text-bold text-2xl">Update Your
+                                                                        cours</h1>
+                                                                    <form
+                                                                        action="{{ route('courses.update', $course->id) }}"
+                                                                        method="post" class="flex mt-4 mr-4 flex-col">
+                                                                        @csrf
+                                                                        @method('put')
+                                                                        <!-- Populate the form fields with existing course information -->
+
+                                                                        <!-- Add other course fields here -->
+
+
                                                                         <div class=" ml-4  input__wrapper">
                                                                             <label
-                                                                                
                                                                                 class=" bg-gray-200 text-black border-b input__label">
                                                                                 Cours Description</label>
-                                                                                <textarea name="description"  
-                                                                               class=" w-full input__field">{{ $course->description }}</textarea>
-                                                                  
+                                                                            <textarea name="description" class=" w-full input__field">{{ $course->description }}</textarea>
+
                                                                         </div>
 
                                                                         <div class=" ml-4 input__wrapper">
                                                                             <label
-                                                                                
                                                                                 class="bg-gray-200 text-black  border-b input__label">
                                                                                 Title</label>
-                                                                            <input type="text" name="title"
-                                                                                multiple class="  w-full input__field"   value="{{ $course->title }}">
+                                                                            <input type="text" name="title" multiple
+                                                                                class="  w-full input__field"
+                                                                                value="{{ $course->title }}">
                                                                         </div>
 
                                                                         <button type="submit"
-                                                                        class="bg-blue-500 text-white m-4 px-4 py-2 rounded">Update
-                                                                </form>
-                                                                <button
-                                                                    class="absolute top-0 right-0 mt-4 mr-4 text-red-500 close-modal text-3xl">&times;</button>
+                                                                            class="bg-blue-500 text-white m-4 px-4 py-2 rounded">Update
+                                                                    </form>
+                                                                    <button
+                                                                        class="absolute top-0 right-0 mt-4 mr-4 text-red-500 close-modal text-3xl">&times;</button>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
                                                     </td>
 
@@ -350,7 +271,6 @@
                                                 </tr>
                                             @endif
                                         @endforeach
-
 
 
 
@@ -367,6 +287,95 @@
         </div>
         <hr>
     @endforeach
+
+
+    
+
+    <div
+    class="exercice-forms hidden modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+
+
+    <div class="relative bg-gray-200 rounded-lg p-8 max-w-md w-full">
+        <div class=" flex justify-around"> <button
+                id="exercise-files-with-correction-btn"
+                class=" w-32 bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
+                Exercise Files with Correction</button>
+
+            <!-- Button to choose the form for exercise files without correction -->
+            <button id="exercise-files-without-correction-btn"
+                class="w-32 bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
+                Exercise Files without Correction</button>
+        </div>
+        <!-- Form for adding an exercise file -->
+        <div class="hidden exercise-file-form-with-correction ">
+            <div class="bg-gray-200 rounded-lg p-8 max-w-md w-full">
+                <form action="{{ route('exercise-files-with-correction.store') }}"
+                    method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input class="course_id" type="hidden" name="course_id"
+                        value="">
+
+                    <div class="input__wrapper">
+                        <label for="exercise_files_with_correction"
+                            class="input__label">Exercise Files
+                            (with correction)
+                            :</label>
+                        <input type="file" id="exercise_files_with_correction"
+                            name="exercise_files_with_correction[]" multiple
+                            class="input__field">
+                    </div>
+                    <!-- Add input for correction files if needed -->
+                    <div class="input__wrapper">
+                        <label for="correction_files"
+                            class="input__label">Correction
+                            Files:</label>
+                        <input type="file" id="correction_files"
+                            name="correction_files[]" multiple
+                            class="input__field">
+                    </div>
+                    <button type="submit"
+                        class="bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
+                        File</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Form for adding an exercise file without correction -->
+        <div class="hidden exercise-file-form-without-correction ">
+            <div class="bg-gray-200 rounded-lg p-8 max-w-md w-full">
+                <form action="{{ route('exercise-files.store') }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <input class="course_id" type="hidden" name="course_id"
+                        value="">
+
+                    <div class="input__wrapper">
+                        <label for="exercise_files_without_correction"
+                            class="input__label">Exercise Files
+                            (without correction):</label>
+                        <input type="file"
+                            id="exercise_files_without_correction"
+                            name="exercise_files_without_correction[]" multiple
+                            class="input__field">
+                    </div>
+                    <button type="submit"
+                        class="bg-blue-500 text-white m-4 px-4 py-2 rounded">Add
+                        File</button>
+                </form>
+            </div>
+
+
+        </div>
+
+        <button
+            class="absolute top-0 right-0 mt-4 mr-4 text-red-500 close-modal text-3xl">&times;</button>
+
+    </div>
+
+
+
+</div>
+
 
     <script>
         // Add event listener to toggle the cycle matières visibility
@@ -407,14 +416,26 @@
         });
 
 
+
+
         document.querySelectorAll('.add-exercise-file-icon').forEach(icon => {
             icon.addEventListener('click', function() {
+                console.log('frff');
                 const exerciseForms = document.querySelector('.exercice-forms');
+                const courseId = this.dataset.courseId;
+              console.log(courseId);
+                exerciseForms.querySelector('.exercise-file-form-with-correction input[name="course_id"]').value = courseId;
+                exerciseForms.querySelector('.exercise-file-form-without-correction input[name="course_id"]').value = courseId;
+
                 exerciseForms.classList.toggle('hidden');
             });
         });
 
-        // Add event listeners to choose between exercise forms
+
+
+
+
+
         document.getElementById('exercise-files-with-correction-btn').addEventListener('click', function() {
             const formWithCorrection = document.querySelector('.exercise-file-form-with-correction');
             const formWithoutCorrection = document.querySelector('.exercise-file-form-without-correction');
