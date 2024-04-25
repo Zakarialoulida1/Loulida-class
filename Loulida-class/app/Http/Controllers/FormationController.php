@@ -55,13 +55,13 @@ class FormationController extends Controller
     public function loadAllData()
     {
 
-        if(auth()->user()->role === 'admin'){
-       $formations = Formation::with('matieres')->with('cycleEducative')->get();
-        }else{
+      
           $formations = Formation::with('matieres')->with('cycleEducative')->where('available_place', '>=', 1)->get();
-       }
+       
         $partners = Partner::with('user')->with('matiere')->where('type', 'teacher')->where('status', 'validé')->get();
-
+        if(auth()->check() && auth()->user()->role === 'admin'){
+            $formations = Formation::with('matieres')->with('cycleEducative')->get();
+             }
         return response()->json([
             'formations' => $formations,
             'partners' => $partners,

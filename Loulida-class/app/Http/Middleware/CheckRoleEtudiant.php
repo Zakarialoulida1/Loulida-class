@@ -20,6 +20,6 @@ class CheckRoleEtudiant
         }
 
         // Redirect or return an error response
-        return redirect()->route('formation.index')->with('error', 'Access denied.');
+        return redirect()->route('login')->with('error', 'Connect to your account');
     }
 }

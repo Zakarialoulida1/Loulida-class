@@ -19,6 +19,9 @@ class PaymentController extends Controller
     public function create(Request $request)
     {
         // Fetch the formation ID from the request parameters
+ddd('ffff');
+        if(!auth()->check()){
+          return to_route('login') ;       }
         $formation = Formation::with('matieres', 'cycleEducative')
             ->findOrFail($request->input('formation_id'));
 
