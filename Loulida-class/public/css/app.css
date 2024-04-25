@@ -89,7 +89,7 @@ label,
 
 .circle {
   width: 400px;
-
+   height: 400px;
   padding-bottom: 28%;
   /* This creates a perfect circle */
   background-color: #219EBC;
@@ -129,4 +129,40 @@ label,
 /* Ensuring smoother animation */
 .no-animation {
   animation: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .slide-from-top {
+    animation: slideFromTop 1s forwards;
+  }
+  .slide-from-bottom {
+    animation: slideFromBottom 1s forwards;
+  }
+
+
+  .slide-from-left,
+  .slide-from-right {
+    animation: none;
+  }
+
+  .circle {
+    width: 372px;
+     height: 372px;}
+}
+
+@keyframes slideFromTop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes slideFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }

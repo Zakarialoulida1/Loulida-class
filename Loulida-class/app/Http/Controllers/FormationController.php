@@ -33,7 +33,7 @@ class FormationController extends Controller
     public function formation()
     {
         $user = User::find(auth()->id());
-        $paidFormationIds = $user->payments->pluck('formation_id')->toArray();
+        $paidFormationIds = $user->payments->where('status', 'validé')->pluck('formation_id')->toArray();
 
         // Fetch the paid formations along with their associated matieres and cours
         $cycles = Formation::with(['matieres.cours', 'cycleEducative'])->whereIn('id', $paidFormationIds)->get();
@@ -43,7 +43,7 @@ class FormationController extends Controller
 
     public function loadMoreData()
     {
-        $formations = Formation::with('matieres')->with('cycleEducative')->take(3)->get();
+        $formations = Formation::with('matieres')->with('cycleEducative')->where('available_place', '>=', 1)->take(3)->get();
         $partners = Partner::with('user')->with('matiere')->where('type', 'teacher')->where('status', 'validé')->take(4)->get();
 
         return response()->json([
@@ -54,7 +54,12 @@ class FormationController extends Controller
 
     public function loadAllData()
     {
-        $formations = Formation::with('matieres')->with('cycleEducative')->get();
+
+        if(auth()->user()->role === 'admin'){
+       $formations = Formation::with('matieres')->with('cycleEducative')->get();
+        }else{
+          $formations = Formation::with('matieres')->with('cycleEducative')->where('available_place', '>=', 1)->get();
+       }
         $partners = Partner::with('user')->with('matiere')->where('type', 'teacher')->where('status', 'validé')->get();
 
         return response()->json([
@@ -65,30 +70,32 @@ class FormationController extends Controller
 
 
 
-    public function filterFormations(Request $request)
-    {
+ public function filterFormations(Request $request)
+{
+   
 
+  
+    // Retrieve filtered formations based on selected cycle educative
+    $filteredFormations = Formation::query();
 
-        $request->validate([
-            'cycle_educative_id' => 'required|exists:cycle_educatives,id',
-            'matiere_id' => 'required|exists:matieres,id',
-        ]);
+    if ($request->cycle_educative_id !== 'all') {
+        $filteredFormations->where('cycle_educative_id', $request->cycle_educative_id);
 
-
-        // Retrieve filtered formations based on selected cycle educative and matiere
-        $filteredFormations = Formation::where('cycle_educative_id', $request->cycle_educative_id)
-            ->whereHas('matieres', function ($query) use ($request) {
+        // Check if user has selected a specific matiere or chose "Select by Cycle Only"
+        if ($request->filled('matiere_id') && $request->matiere_id !== 'all') {
+            // Filter by matiere if a specific one is selected
+            $filteredFormations->whereHas('matieres', function ($query) use ($request) {
                 $query->where('id', $request->matiere_id);
-            })
-            ->with('matieres')
-            ->with('cycleEducative')
-            ->get();
-
-
-
-
-        return response()->json(['formations' => $filteredFormations]);
+            });
+        }
     }
+
+    $filteredFormations = $filteredFormations->with('matieres')
+        ->with('cycleEducative')
+        ->get();
+
+    return response()->json(['formations' => $filteredFormations]);
+}
 
 
 

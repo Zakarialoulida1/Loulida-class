@@ -15,7 +15,7 @@
                     Course</button>
             </div>
         </div>
-        <div id="circleDiv" class=" relative circle h-[400px] mt-5 rounded-full overflow-hidden">
+        <div id="circleDiv" class=" relative circle  mt-5 rounded-full overflow-hidden">
             <img class="absolute cover w-70 h-80 top-36 left-24 object-cover z-40" src="{{ asset('images/girl.png') }}"
                 alt="Your Image">
         </div>
@@ -32,10 +32,10 @@
     <div class="Formations grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 md:gap-2 xl:grid-cols-3 gap-8 m-4">
 
     </div>
-    <div class="mx-auto w-[20vw] mt-28 md:w-[10vw]">
+    <div class="  w-[100px]  mx-auto  mt-28 md:w-[10vw]">
 
         <a href="/AllFormation" id="seeMoreButton"
-            class="px-4 py-2  w-fit mx-auto bg-[#ffb703] hover:bg-[#fb8500] text-white rounded ">See More</a>
+            class="px-4 py-2 sm:w-fit mx-auto   bg-[#ffb703] hover:bg-[#fb8500] text-white rounded ">See More</a>
 
     </div>
     <!-- Display Partners -->
@@ -124,8 +124,20 @@
                 return rect.top >= 0 && rect.bottom <= window.innerHeight;
             }
 
+
             function handleScroll() {
-                if (checkVisibility(circleDiv)) {
+  if (window.innerWidth <= 768) {
+
+
+    if (checkVisibility(textDiv)) {
+      textDiv.classList.remove("no-animation");
+      textDiv.classList.add("slide-from-top");
+    } else {
+      textDiv.classList.remove("slide-from-top");
+      textDiv.classList.add("no-animation");
+    }
+  } else {
+    if (checkVisibility(circleDiv)) {
                     circleDiv.classList.remove("no-animation");
                     circleDiv.classList.add("slide-from-right");
                 } else {
@@ -140,7 +152,10 @@
                     textDiv.classList.remove("slide-from-left");
                     textDiv.classList.add("no-animation");
                 }
-            }
+  }
+}
+
+           
 
             window.addEventListener("scroll", handleScroll);
 
@@ -181,7 +196,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" pb-4">
+            <div class="w-fit  pb-4">
                 <!-- Formation Title -->
                 <div class="mx-4 flex justify-between">
                     <h1 class="font-bold">${formation.cycle_educative.name}</h1>
@@ -199,8 +214,6 @@
                 <!-- Matieres -->
                 <div class="flex items-center divide-x-2 divide-blue-400 justify-between m-4">
                     <div class="w-fit flex">
-                        <!-- Formation Logo -->
-                        <img class="w-24" src="{{ asset('images/logos.png') }}" alt="">  
                         <div class="ml-2 flex flex-wrap items-center">
                             <!-- Matieres HTML -->
                             ${matieresHTML}
@@ -211,12 +224,12 @@
                     <h1 class="text-2xl p-2 text-green-500">${formation.price} DH</h1>
                 </div>
                 <a href="/payments/create?formation_id=${formation.id}"
-                        class="w-full inline-flex justify-center rounded-md m-2 border border-transparent shadow-sm px-4 py-2 bg-[#fb8500] text-base font-medium text-white hover:bg-[#fb8500] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fb8500] sm:ml-3 sm:w-auto sm:text-sm">
+                        class=" inline-flex justify-center rounded-md m-2 border border-transparent shadow-sm px-4 py-2 bg-[#fb8500] text-base font-medium text-white hover:bg-[#fb8500] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fb8500] sm:ml-3 sm:w-auto sm:text-sm">
                         Make Payment
                     </a>
 
                     
-                <button class="view-details-button w-full inline-flex justify-center rounded-md border m-2 border-transparent shadow-sm px-4 py-2 bg-[#fb8500] text-base font-medium text-white hover:bg-[#fb8500] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fb8500] sm:ml-3 sm:w-auto sm:text-sm" >View Details</button>
+                <button class="view-details-button  inline-flex justify-center rounded-md border m-2 border-transparent shadow-sm px-4 py-2 bg-[#fb8500] text-base font-medium text-white hover:bg-[#fb8500] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fb8500] sm:ml-3 sm:w-auto sm:text-sm" >View Details</button>
                
             </div>
         </div>

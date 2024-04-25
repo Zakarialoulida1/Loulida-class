@@ -76,10 +76,10 @@ class PaymentController extends Controller
         $payment = Payment::findOrFail($id);
         $payment->status = 'valide';
         $payment->save();
-
-        // Notify the user
+      $payment->formation->available_place=$payment->formation->available_place - 1;
         $payment->user->notify(new PaymentStatusNotification('validated'));
-
+        $payment->formation->save();
+      
         return redirect()->back()->with('success', 'Payment validated successfully');
     }
 
@@ -88,7 +88,8 @@ class PaymentController extends Controller
         $payment = Payment::findOrFail($id);
         $payment->status = 'non_valide';
         $payment->save();
-
+        $payment->formation->available_place=$payment->formation->available_place + 1;
+        $payment->formation->save();
         // Notify the user
         $payment->user->notify(new PaymentStatusNotification('unvalidated'));
 

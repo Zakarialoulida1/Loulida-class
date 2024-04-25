@@ -1,6 +1,9 @@
-<x-app title="Cycles">
 
+@extends('layouts.master')
 
+@section('title', 'Cycles')
+
+@section('content')
     <div class="flex-none w-full max-w-full px-3 mt-8">
         <div
             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
@@ -195,7 +198,7 @@
 
         </svg> </button>
 
-</x-app>
+
 
 
 <script>
@@ -223,3 +226,4 @@
     }
 </script>
 
+@endsection

@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cours;
+use App\Models\Formation;
+use App\Models\Partner;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +15,18 @@ class UserController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('profile', compact('user'));
+       if(auth()->user()->role === "Etudiant"){
+        $formationcount = Payment::where('user_id',Auth()->id())->where('status','validé')->count();
+       
+       }else{
+        $formationcount = Formation::count();
+        
+       }
+       $partnerCount=Partner::where('status','validé')->count();
+       $courscount =Cours::where('user_id',Auth()->id())->count();
+        $etudiantCount=User::where('role','Etudiant')->count();
+
+        return view('profile', compact('user','formationcount','courscount','partnerCount','etudiantCount'));
     }
     public function updateProfile(Request $request)
     {

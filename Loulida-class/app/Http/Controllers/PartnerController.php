@@ -61,7 +61,7 @@ class PartnerController extends Controller
 
     public function showPartnerRequests()
     {
-        $partnerRequests = Partner::with('user')->get();
+        $partnerRequests = Partner::with('user','matiere')->get();
        
         return view('admin.partner-requests', compact('partnerRequests'));
     }
@@ -82,17 +82,27 @@ class PartnerController extends Controller
     ];
     
     $user->notify(new YouBecomeaTeacherNotification($data));
- 
+    $user->role = 'professeur';
+    
     $partner->save();
-    return redirect()->back()->with('success', 'Partner request confirmed successfully');
+    $user->save();
+    return redirect()->back()->with('success', 'Now the user become a Teacher With you and her request is  confirmed successfully');
 }
 public function UnConfirm( $id)
 {
     $partner = Partner::findOrFail($id);
     $partner->status = 'non_valide'; // Assuming you're updating the status to 'valide'
-    $partner->save();
+   
+    $userId=$partner->user_id;
+    
+    $user = User::findOrFail(  $userId);
 
-    // Redirect back to the page where the request originated
+
+    $user->role = 'Etudiant';
+    
+    $partner->save();
+    $user->save();
+    
     return redirect()->back()->with('success', 'Partner request UnConfirmed successfully');
 }
 

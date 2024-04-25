@@ -37,7 +37,7 @@ class CoursPolicy
      */
     public function update(User $user, Cours $cours)
     {
-        //
+        return $user->id === $cours->user_id;
     }
 
     /**

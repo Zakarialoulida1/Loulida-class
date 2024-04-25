@@ -31,9 +31,9 @@
 
     <main>
         @include('layouts.flashbag')
-        <div class="  ">
+       
             @yield('content')
-        </div>
+        
     </main>
     <x-footer />
 
